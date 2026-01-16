@@ -115,7 +115,12 @@ def _get_ge_indices(structure):
 def _get_sb_indices(structure):
     return [i for i, species in enumerate(structure.species) if str(species) == "Sb"]
 def _get_rare_earth_indices(structure):
-    return [i for i, site in enumerate(structure) if site.specie.is_rare_earth]
+    if hasattr(structure[1].specie, "is_rare_earth_metal"):
+        return [i for i, site in enumerate(structure) if site.specie.is_rare_earth_metal]
+    elif hasattr(structure[1].specie, "is_rare_earth"):
+        return [i for i, site in enumerate(structure) if site.specie.is_rare_earth]
+    else:
+        return False
 
 
 def _get_alkali_alkaline_indices(structure):
